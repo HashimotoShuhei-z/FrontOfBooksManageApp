@@ -29,7 +29,7 @@ const page = () => {
                     </div>
                     <div className='flex justify-center'>
                         <Button asChild>
-                            <Link href="/admin/home" className='font-semibold'>登録</Link>
+                            <Link href="/user/home" className='font-semibold'>登録</Link>
                         </Button>
                     </div>
                 </form>

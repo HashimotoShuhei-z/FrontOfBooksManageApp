@@ -21,7 +21,7 @@ const page = () => {
                     </div>
                     <div className='flex justify-center'>
                         <Button asChild>
-                            <Link href="/admin/home">Login</Link>
+                            <Link href="/user/home">Login</Link>
                         </Button>
                     </div>
                     <div className="text-sm font-medium text-gray-900 dark:text-white px-20 ">

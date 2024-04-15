@@ -29,6 +29,7 @@ const buttonVariants = cva(
         lg: "h-11 rounded-md px-8",
         icon: "h-10 w-10",
         top: "h-10 px-4 py-2 mx-10 font-semibold text-white",
+        mega:"w-60 h-60 text-2xl rounded-md font-semibold text-white",
         big: "w-60 h-40 text-2xl rounded-md font-semibold text-white",
         thin: "w-60 h-24 text-2xl rounded-md font-semibold text-white",
       },
