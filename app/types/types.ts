@@ -5,8 +5,11 @@ interface Book {
     author_id: number
     created_by: number
     updated_by: number
-    created_at: number
-    updated_at: number
+    created_at: string
+    updated_at: string
+    author: Author
+    created_user: Admin
+    updated_user: Admin
 }
 
 interface Meta {
@@ -26,12 +29,26 @@ interface Author {
     name: string  
     created_at: number
     updated_at: number
-    created_by: number
-    updated_by: number
+    created_by: string
+    updated_by: string
+    books: Book[]
+    created_user: Admin
+    updated_user: Admin
+
 }
 
 interface AuthorsData {
-    authors: Author[]
+    authors: Author[],
+    meta: Meta
+}
+
+interface Admin {
+    id: number
+    name: string
+    email: string
+    email_verified_at: string
+    created_at: string
+    updated_at: string
 }
 
 interface placeholder {

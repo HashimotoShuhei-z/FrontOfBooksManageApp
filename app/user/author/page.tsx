@@ -1,6 +1,6 @@
 import AuthorTable from '@/components/original/AuthorTable'
 import { TablePagination } from '@/components/original/TablePagenation'
-import Search from '@/components/original/serch'
+import Search from '@/components/original/BookSerch'
 import React from 'react'
 
 const page = () => {
