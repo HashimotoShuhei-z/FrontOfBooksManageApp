@@ -1,13 +1,13 @@
 import {
     Table,
     TableBody,
-    TableCaption,
     TableCell,
-    TableFooter,
     TableHead,
     TableHeader,
     TableRow,
   } from "@/components/ui/table"
+import TablePagination from "./TablePagination";
+import { metadata } from "@/app/layout";
 
   async function getBooksData(title:string, page:number) {
     //引数なしでクエリのないオブジェクトを作成
@@ -34,32 +34,34 @@ import {
     page: number;
   }) {
     const booksData: BooksData = await getBooksData(title, page);
-    const book: Book[] = booksData.books;
 
     return (
-      <Table>
-        <TableHeader>
-          <TableRow>
-            <TableHead>タイトル</TableHead>
-            <TableHead>著者名</TableHead>
-            <TableHead>登録日時</TableHead>
-            <TableHead>登録者</TableHead>
-            <TableHead></TableHead>
-            <TableHead></TableHead>
-          </TableRow>
-        </TableHeader>
-        <TableBody>
-          {book.map((book) => (
-            <TableRow key={book.id}>
-              <TableCell className="font-medium">{book.title}</TableCell>
-              <TableCell>{book.author.name}</TableCell>
-              <TableCell>{book.created_at}</TableCell>
-              <TableCell>{book.created_user.name}</TableCell>
-              <TableCell>更新</TableCell>
-              <TableCell>削除</TableCell>
+      <div>
+        <Table>
+          <TableHeader>
+            <TableRow>
+              <TableHead>タイトル</TableHead>
+              <TableHead>著者名</TableHead>
+              <TableHead>登録日時</TableHead>
+              <TableHead>登録者</TableHead>
+              <TableHead></TableHead>
+              <TableHead></TableHead>
             </TableRow>
-          ))}
-        </TableBody>
-      </Table>
+          </TableHeader>
+          <TableBody>
+            {booksData.books.map((book) => (
+              <TableRow key={book.id}>
+                <TableCell className="font-medium">{book.title}</TableCell>
+                <TableCell>{book.author.name}</TableCell>
+                <TableCell>{book.created_at}</TableCell>
+                <TableCell>{book.created_user.name}</TableCell>
+                <TableCell>更新</TableCell>
+                <TableCell>削除</TableCell>
+              </TableRow>
+            ))}
+          </TableBody>
+        </Table>
+        <TablePagination totalPages={booksData.meta.lastPage} />
+      </div>
     )
   }

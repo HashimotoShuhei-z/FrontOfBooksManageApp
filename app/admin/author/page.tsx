@@ -1,5 +1,4 @@
 import AuthorTable from '@/components/original/AuthorTable'
-import { TablePagination } from '@/components/original/TablePagenation'
 import React from 'react'
 import AuthorSearch from '@/components/original/AuthorSerch'
 
@@ -19,8 +18,7 @@ const page = ({
         <AuthorSearch placeholder="Serch authors..." />
         <div className='w-screen px-40 py-5'>
           <h2 className='mx-3 my-1 text-xl font-semibold'>著者一覧</h2>
-          <AuthorTable name={name} page={page} /> 
-          <TablePagination/> 
+          <AuthorTable name={name} page={page} />  
         </div>
     </main>
   )

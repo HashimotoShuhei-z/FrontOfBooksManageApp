@@ -27,10 +27,10 @@ interface BooksData{
 interface Author {
     id: number
     name: string  
-    created_at: number
-    updated_at: number
-    created_by: string
-    updated_by: string
+    created_at: string
+    updated_at: string
+    created_by: number
+    updated_by: number
     books: Book[]
     created_user: Admin
     updated_user: Admin

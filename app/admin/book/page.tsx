@@ -1,5 +1,4 @@
 import BookTable from '@/components/original/BookTable'
-import { TablePagination } from '@/components/original/TablePagenation'
 import React from 'react'
 import BookSearch from '@/components/original/BookSerch'
 
@@ -20,7 +19,6 @@ const page = ({
         <div className='w-screen px-40 py-5'>
           <h2 className='mx-3 my-1 text-xl font-semibold'>図書一覧</h2>
           <BookTable title={title} page={page}/>  
-          <TablePagination />
         </div>
     </main>
   )
