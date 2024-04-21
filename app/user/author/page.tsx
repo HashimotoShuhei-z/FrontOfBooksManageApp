@@ -1,5 +1,5 @@
 import AuthorTable from '@/components/original/AuthorTable'
-import { TablePagination } from '@/components/original/TablePagenation'
+import { TablePagination } from '@/components/original/TablePagination'
 import Search from '@/components/original/BookSerch'
 import React from 'react'
 

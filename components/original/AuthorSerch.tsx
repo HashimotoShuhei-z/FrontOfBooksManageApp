@@ -12,6 +12,7 @@ export default function AuthorSearch({ placeholder }: { placeholder: string }) {
 
     const handleSearch = useDebouncedCallback((term: string) => {
       const params = new URLSearchParams(AuthorSearchParams); //初期値としてオブジェクトが渡される
+      params.set('page', '1'); //検索を始めるとpage=1にリセットされる
       if (term) {
           params.set('name', term);
         } else {

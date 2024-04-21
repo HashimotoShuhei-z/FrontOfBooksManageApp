@@ -6,6 +6,7 @@ import {
     TableHeader,
     TableRow,
   } from "@/components/ui/table"
+import TablePagination from "./TablePagination";
   
   async function getAuthorsData(name:string, page:number) {
     //引数なしでクエリのないオブジェクトを作成
@@ -32,32 +33,34 @@ import {
     page: number;
   }) {
     const authorsData: AuthorsData = await getAuthorsData(name,page);
-    const author: Author[] = authorsData.authors;
-    return (
-      <Table>
-        <TableHeader>
-          <TableRow>
-            <TableHead>著者名</TableHead>
-            <TableHead></TableHead>
-            <TableHead>登録日時</TableHead>
-            <TableHead>登録者</TableHead>
-            <TableHead></TableHead>
-            <TableHead></TableHead>
 
-          </TableRow>
-        </TableHeader>
-        <TableBody>
-          {author.map((author) => (
-            <TableRow key={author.id}>
-              <TableCell className="font-medium">{author.name}</TableCell>
-              <TableCell></TableCell>
-              <TableCell>{author.created_at}</TableCell>
-              <TableCell>{author.created_user.name}</TableCell>
-              <TableCell>更新</TableCell>
-              <TableCell>削除</TableCell>
+    return (
+      <div>
+        <Table>
+          <TableHeader>
+            <TableRow>
+              <TableHead>著者名</TableHead>
+              <TableHead></TableHead>
+              <TableHead>登録日時</TableHead>
+              <TableHead>登録者</TableHead>
+              <TableHead></TableHead>
+              <TableHead></TableHead>
             </TableRow>
-          ))}
-        </TableBody>
-      </Table>
+          </TableHeader>
+          <TableBody>
+            {authorsData.authors.map((author) => (
+              <TableRow key={author.id}>
+                <TableCell className="font-medium">{author.name}</TableCell>
+                <TableCell></TableCell>
+                <TableCell>{author.created_at}</TableCell>
+                <TableCell>{author.created_user.name}</TableCell>
+                <TableCell>更新</TableCell>
+                <TableCell>削除</TableCell>
+              </TableRow>
+            ))}
+          </TableBody>
+        </Table>
+        <TablePagination totalPages={authorsData.meta.lastPage} />
+      </div>
     )
   }
