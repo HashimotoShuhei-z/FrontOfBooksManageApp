@@ -2,7 +2,7 @@ import Link from 'next/link'
 import React from 'react'
 import { Button, buttonVariants } from "@/components/ui/button"
 
-
+//TODO:ログイン処理を実装する
 const page = () => {
   return (
     <main className='w-screen h-screen'>

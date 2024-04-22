@@ -1,6 +1,8 @@
-import BookTable from '@/components/original/BookTable'
 import React from 'react'
-import BookSearch from '@/components/original/BookSerch'
+import BookSearch from '@/components/original/bookSerch'
+import Link from 'next/link';
+import { buttonVariants } from '@/components/ui/button';
+import AdminBookTable from '@/components/original/adminBookTable';
 
 const page = ({
   searchParams, //page.tsxのpage関数にはserchParamsかparamsというpropsを入れることが可能
@@ -18,8 +20,9 @@ const page = ({
         <BookSearch placeholder="Serch books..." />
         <div className='w-screen px-40 py-5'>
           <h2 className='mx-3 my-1 text-xl font-semibold'>図書一覧</h2>
-          <BookTable title={title} page={page}/>  
+          <AdminBookTable title={title} page={page}/>  
         </div>
+        <Link href="./home" className={buttonVariants({ variant: "outline", size: "top", className:"my-8"  })}>ホームに戻る</Link>
     </main>
   )
 }

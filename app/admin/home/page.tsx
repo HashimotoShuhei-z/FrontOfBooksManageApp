@@ -9,7 +9,7 @@ export default function Home() {
           <Link href="/admin/author" className={buttonVariants({ variant: "admin", size: "mega", className:"bg-red-700 hover:bg-red-900" })}>著者一覧</Link>
         </div>
         <div className="ml-8">
-          <Link href="/" className={buttonVariants({ variant: "outline", size: "top", className:"my-8"  })}>トップページに戻る</Link>
+          <Link href="/" className={buttonVariants({ variant: "outline", size: "top", className:"my-8"  })}>ログアウト</Link>
         </div>
     </main>
   );

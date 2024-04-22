@@ -6,7 +6,9 @@ import {
     TableHeader,
     TableRow,
   } from "@/components/ui/table"
-import TablePagination from "./TablePagination";
+import TablePagination from "./tablePagination";
+import Link from "next/link";
+import { Button, buttonVariants } from "../ui/button";
   
   async function getAuthorsData(name:string, page:number) {
     //引数なしでクエリのないオブジェクトを作成
@@ -21,18 +23,18 @@ import TablePagination from "./TablePagination";
         cache: "no-store",
     });
 
-    const authorsData = await response.json();
+    const authorsData: AuthorsData = await response.json();
     return authorsData;
   }
   
-  export default async function AuthorTable({
+  export default async function UserAuthorTable({
     name,
     page,
   }: {
     name: string;
     page: number;
   }) {
-    const authorsData: AuthorsData = await getAuthorsData(name,page);
+    const authorsData = await getAuthorsData(name,page);
 
     return (
       <div>
@@ -40,7 +42,6 @@ import TablePagination from "./TablePagination";
           <TableHeader>
             <TableRow>
               <TableHead>著者名</TableHead>
-              <TableHead></TableHead>
               <TableHead>登録日時</TableHead>
               <TableHead>登録者</TableHead>
               <TableHead></TableHead>
@@ -48,14 +49,15 @@ import TablePagination from "./TablePagination";
             </TableRow>
           </TableHeader>
           <TableBody>
-            {authorsData.authors.map((author) => (
-              <TableRow key={author.id}>
-                <TableCell className="font-medium">{author.name}</TableCell>
-                <TableCell></TableCell>
+            {authorsData.author.map((author) => (
+              <TableRow>
+                <TableCell className="font-medium">
+                  <Link href={`./author/${author.id}`} className={buttonVariants({variant:"link", size:"smallLink"})}>{author.name}</Link>
+                </TableCell>
                 <TableCell>{author.created_at}</TableCell>
                 <TableCell>{author.created_user.name}</TableCell>
-                <TableCell>更新</TableCell>
-                <TableCell>削除</TableCell>
+                <TableCell></TableCell>
+                <TableCell></TableCell>
               </TableRow>
             ))}
           </TableBody>

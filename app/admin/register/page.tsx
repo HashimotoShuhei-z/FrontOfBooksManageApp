@@ -2,6 +2,7 @@ import React from 'react'
 import Link from 'next/link'
 import { Button, buttonVariants } from '@/components/ui/button'
 
+//TODO:登録処理を実装する
 const page = () => {
   return (
     <main className='w-screen h-screen'>
