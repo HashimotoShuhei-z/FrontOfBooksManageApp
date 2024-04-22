@@ -20,7 +20,7 @@ interface Meta {
 }
 
 interface BooksData{
-    books: Book[],
+    book: Book[],
     meta: Meta
 }
 
@@ -31,14 +31,21 @@ interface Author {
     updated_at: string
     created_by: number
     updated_by: number
-    books: Book[]
+    book: Book[]
     created_user: Admin
     updated_user: Admin
 
 }
 
 interface AuthorsData {
-    authors: Author[],
+    author: Author[]
+    book: Book[]
+    meta: Meta
+}
+
+interface AuthorData {
+    author: Author
+    book: Book[]
     meta: Meta
 }
 

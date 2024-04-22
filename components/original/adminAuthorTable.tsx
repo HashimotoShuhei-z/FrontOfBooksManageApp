@@ -6,41 +6,41 @@ import {
     TableHeader,
     TableRow,
   } from "@/components/ui/table"
-import TablePagination from "./TablePagination";
-import { metadata } from "@/app/layout";
-
-  async function getBooksData(title:string, page:number) {
+import TablePagination from "./tablePagination";
+import Link from "next/link";
+import { Button, buttonVariants } from "../ui/button";
+  
+  async function getAuthorsData(name:string, page:number) {
     //引数なしでクエリのないオブジェクトを作成
     const params = new URLSearchParams(); 
 
     //キーと値のペアをオブジェクトに追加
-    params.append("title", title); 
+    params.append("name", name); 
     params.append("page", page.toString());
 
     // params.toString() で ?title=タイトル&page=ページ番号 という文字列を作成
-    const response = await fetch(`http://localhost/api/books?${params.toString()}`, {
+    const response = await fetch(`http://localhost/api/authors?${params.toString()}`, {
         cache: "no-store",
     });
 
-    const booksData = await response.json();
-    return booksData;
+    const authorsData: AuthorsData = await response.json();
+    return authorsData;
   }
-
-  export default async function BookTable({
-    title,
+  
+  export default async function AdminAuthorTable({
+    name,
     page,
   }: {
-    title: string;
+    name: string;
     page: number;
   }) {
-    const booksData: BooksData = await getBooksData(title, page);
+    const authorsData = await getAuthorsData(name,page);
 
     return (
       <div>
         <Table>
           <TableHeader>
             <TableRow>
-              <TableHead>タイトル</TableHead>
               <TableHead>著者名</TableHead>
               <TableHead>登録日時</TableHead>
               <TableHead>登録者</TableHead>
@@ -49,19 +49,20 @@ import { metadata } from "@/app/layout";
             </TableRow>
           </TableHeader>
           <TableBody>
-            {booksData.books.map((book) => (
-              <TableRow key={book.id}>
-                <TableCell className="font-medium">{book.title}</TableCell>
-                <TableCell>{book.author.name}</TableCell>
-                <TableCell>{book.created_at}</TableCell>
-                <TableCell>{book.created_user.name}</TableCell>
+            {authorsData.author.map((author) => (
+              <TableRow>
+                <TableCell className="font-medium">
+                  <Link href={`./author/${author.id}`} className={buttonVariants({variant:"link", size:"smallLink"})}>{author.name}</Link>
+                </TableCell>
+                <TableCell>{author.created_at}</TableCell>
+                <TableCell>{author.created_user.name}</TableCell>
                 <TableCell>更新</TableCell>
                 <TableCell>削除</TableCell>
               </TableRow>
             ))}
           </TableBody>
         </Table>
-        <TablePagination totalPages={booksData.meta.lastPage} />
+        <TablePagination totalPages={authorsData.meta.lastPage} />
       </div>
     )
   }

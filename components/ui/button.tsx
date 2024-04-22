@@ -21,7 +21,7 @@ const buttonVariants = cva(
         secondary:
           "bg-secondary text-secondary-foreground hover:bg-secondary/80",
         ghost: "hover:bg-accent hover:text-accent-foreground",
-        link: "text-primary underline-offset-4 hover:underline",
+        link: "underline-offset-2 hover:underline",
       },
       size: {
         default: "h-10 px-4 py-2 text-white",
@@ -32,6 +32,7 @@ const buttonVariants = cva(
         mega:"w-60 h-60 text-2xl rounded-md font-semibold text-white",
         big: "w-60 h-40 text-2xl rounded-md font-semibold text-white",
         thin: "w-60 h-24 text-2xl rounded-md font-semibold text-white",
+        smallLink: "h-6 text-blue-400",
       },
     },
     defaultVariants: {

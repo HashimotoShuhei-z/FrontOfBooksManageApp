@@ -23,7 +23,7 @@ import {
   
 
     return (
-      <Pagination className="my-8">
+      <Pagination className="mt-8">
         <PaginationContent>
           <PaginationItem>
             {currentPage > 1 && <PaginationPrevious href={createPageURL(currentPage - 1)} className="bg-gray-400" />}
