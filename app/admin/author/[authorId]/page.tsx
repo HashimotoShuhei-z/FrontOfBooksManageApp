@@ -1,4 +1,5 @@
 import TablePagination from "@/components/original/tablePagination";
+import { UpdateBook } from "@/components/original/updateBook";
 import { buttonVariants } from "@/components/ui/button";
 import {
     Table,
@@ -46,8 +47,8 @@ import Link from "next/link";
                           :
                           <TableCell>{book.created_user.name}</TableCell>
                         }
-                        <TableCell>更新</TableCell>
-                        <TableCell>削除</TableCell>
+                    <TableCell> <UpdateBook id={book.id} title={book.title} author_id={book.author_id} /></TableCell> 
+                        <TableCell>削除</TableCell> {/* TODO:削除ボタンを実装 */}
                     </TableRow>
                     ))}
                 </TableBody>

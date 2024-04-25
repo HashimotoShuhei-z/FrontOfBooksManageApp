@@ -10,6 +10,7 @@ import TablePagination from "./tablePagination";
 import { metadata } from "@/app/layout";
 import Link from "next/link";
 import { buttonVariants } from "../ui/button";
+import { UpdateBook } from "./updateBook";
 
   async function getBooksData(title:string, page:number) {
     //引数なしでクエリのないオブジェクトを作成
@@ -63,8 +64,8 @@ import { buttonVariants } from "../ui/button";
                   :
                   <TableCell>{book.created_user.name}</TableCell>
                 }
-                <TableCell>更新</TableCell> {/* TODO:更新、削除ボタンを実装 */}
-                <TableCell>削除</TableCell> 
+                <TableCell> <UpdateBook id={book.id} title={book.title} author_id={book.author_id} /></TableCell> 
+                <TableCell>削除</TableCell> {/* TODO:削除ボタンを実装 */}
               </TableRow>
             ))}
           </TableBody>
