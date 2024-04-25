@@ -48,7 +48,7 @@ export function UpdateBook(obj: {id: number ,title: string ,author_id: number}) 
   return (
     <Sheet>
       <SheetTrigger asChild>
-        <Button variant="outline">編集</Button>
+        <Button variant="outline" className="bg-green-500 hover:bg-green-800">編集</Button>
       </SheetTrigger>
       <SheetContent>
         <SheetHeader>
