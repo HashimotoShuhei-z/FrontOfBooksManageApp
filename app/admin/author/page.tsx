@@ -3,6 +3,7 @@ import AuthorSearch from '@/components/original/authorSerch'
 import Link from 'next/link';
 import { buttonVariants } from '@/components/ui/button';
 import AdminAuthorTable from '@/components/original/adminAuthorTable';
+import { CreateAuthor } from '@/components/original/createAuthor';
 
 const page = ({
   searchParams, //page.tsxのpage関数にはserchParamsかparamsというpropsを入れることが可能。現在のURLの?以降をオブジェクトに
@@ -17,12 +18,13 @@ const page = ({
 
   return (
     <main className='w-screen h-screen'>
+      
         <AuthorSearch placeholder="Serch authors..." />
-        <div className='w-screen px-40 pt-5'>
-          <h2 className='mx-3 my-1 text-xl font-semibold'>著者一覧</h2>
-          <AdminAuthorTable name={name} page={page} />  
-        </div>
-        <Link href="./home" className={buttonVariants({ variant: "outline", size: "top", className:"my-8"  })}>ホームに戻る</Link>
+      <div className='w-screen px-40 pt-5'>
+        <h2 className='mx-3 my-1 text-xl font-semibold'>著者一覧</h2>
+        <AdminAuthorTable name={name} page={page} />  
+      </div>
+      <Link href="./home" className={buttonVariants({ variant: "outline", size: "top", className:"my-8"  })}>ホームに戻る</Link>
     </main>
   )
 }

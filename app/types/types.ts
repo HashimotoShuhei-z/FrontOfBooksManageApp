@@ -3,13 +3,13 @@ interface Book {
     id: number
     title: string
     author_id: number
-    created_by: number
-    updated_by: number
+    created_by: number|null
+    updated_by: number|null
     created_at: string
     updated_at: string
     author: Author
-    created_user: Admin
-    updated_user: Admin
+    created_user: Admin|null
+    updated_user: Admin|null
 }
 
 interface Meta {
@@ -29,11 +29,11 @@ interface Author {
     name: string  
     created_at: string
     updated_at: string
-    created_by: number
-    updated_by: number
+    created_by: number|null
+    updated_by: number|null
     book: Book[]
-    created_user: Admin
-    updated_user: Admin
+    created_user: Admin|null
+    updated_user: Admin|null
 
 }
 

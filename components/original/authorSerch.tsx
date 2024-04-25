@@ -2,6 +2,7 @@
  
 import { usePathname, useRouter, useSearchParams } from 'next/navigation';
 import { useDebouncedCallback } from 'use-debounce';
+import { CreateAuthor } from './createAuthor';
  
 export default function AuthorSearch({ placeholder }: { placeholder: string }) {
     const AuthorSearchParams = useSearchParams();
@@ -26,18 +27,21 @@ export default function AuthorSearch({ placeholder }: { placeholder: string }) {
     //ユーザーが入力をやめてから1000ms経過した際にコードが実行されるs
  
   return (
-    <div className="relative flex flex-1 flex-shrink-0">
+    <div className="relative flex flex-1 flex-shrink-0"> {/* relative flex flex-1 flex-shrink-0 */}
       <label htmlFor="search" className="sr-only">
         Search
       </label>
       <input
-        className="peer block w-2/3 rounded-md border border-black py-[9px] pl-10 text-sm outline-2 placeholder:text-gray-500 mx-auto mt-10"
+        className="peer block w-1/2 rounded-md border border-black py-[9px] pl-10 text-sm outline-2 placeholder:text-gray-500 ml-80 mt-10"
         placeholder={placeholder}
         onChange={(e) => {
           handleSearch(e.target.value);
         }}
         defaultValue={AuthorSearchParams.get('name')?.toString()}
       />
+      <div className='pt-10 ml-4'>
+        <CreateAuthor />
+      </div>
     </div>
   );
 }
