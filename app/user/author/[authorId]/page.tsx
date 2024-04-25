@@ -41,7 +41,11 @@ import Link from "next/link";
                     <TableRow >
                         <TableCell className="font-medium">{book.title}</TableCell>
                         <TableCell>{book.created_at}</TableCell>
-                        <TableCell>{book.created_user.name}</TableCell>
+                        {book.created_user == null  ?
+                          <TableCell>null</TableCell>
+                          :
+                          <TableCell>{book.created_user.name}</TableCell>
+                        }
                         <TableCell></TableCell>
                         <TableCell></TableCell>
                     </TableRow>
@@ -50,7 +54,12 @@ import Link from "next/link";
                 </Table>
                 <TablePagination totalPages={authorData.meta.lastPage} />
         </div>
-        <Link href="../author" className={buttonVariants({ variant: "outline", size: "top", className:"my-8"  })}>著者一覧に戻る</Link>
+        <div>
+          <Link href="../author" className={buttonVariants({ variant: "outline", size: "top", className:"my-8 " })}>著者一覧に戻る</Link>
+        </div>
+        <div>
+          <Link href="../book" className={buttonVariants({ variant: "outline", size: "top", className:"my-2 " })}>図書一覧に戻る</Link>
+        </div>
       </main>
     )
   }

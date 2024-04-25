@@ -9,6 +9,7 @@ import {
 import TablePagination from "./tablePagination";
 import Link from "next/link";
 import { Button, buttonVariants } from "../ui/button";
+import { UpdateAuthor } from "./updateAuthor";
   
   async function getAuthorsData(name:string, page:number) {
     //引数なしでクエリのないオブジェクトを作成
@@ -55,8 +56,12 @@ import { Button, buttonVariants } from "../ui/button";
                   <Link href={`./author/${author.id}`} className={buttonVariants({variant:"link", size:"smallLink"})}>{author.name}</Link>
                 </TableCell>
                 <TableCell>{author.created_at}</TableCell>
-                <TableCell>{author.created_user.name}</TableCell>
-                <TableCell>更新</TableCell>
+                {author.created_user == null  ?
+                  <TableCell>null</TableCell>
+                  :
+                  <TableCell>{author.created_user.name}</TableCell>
+                }
+                <TableCell> <UpdateAuthor id={author.id} name={author.name} /> </TableCell>
                 <TableCell>削除</TableCell>
               </TableRow>
             ))}
