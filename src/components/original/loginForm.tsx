@@ -1,14 +1,14 @@
-import { useRouter } from 'next/navigation';
-import { useState } from 'react';
+import { useRouter } from 'next/navigation'
+import { useState } from 'react'
 interface LoginResponse {
-    token: string;
-  }
+  token: string
+}
 
 const LoginForm = () => {
-  const [email, setEmail] = useState<string>('');
-  const [password, setPassword] = useState<string>('');
-  const [error, setError] = useState<string>('');
-  const router = useRouter();
+  const [email, setEmail] = useState<string>('')
+  const [password, setPassword] = useState<string>('')
+  const [error, setError] = useState<string>('')
+  const router = useRouter()
 
   const handleLogin = async () => {
     try {
@@ -18,31 +18,30 @@ const LoginForm = () => {
           'Content-Type': 'application/json'
         },
         body: JSON.stringify({ email, password })
-      });
+      })
 
       if (!response.ok) {
-        throw new Error('Invalid username or password');
+        throw new Error('Invalid username or password')
       }
 
-      const data: LoginResponse = await response.json();
-      const token: string = data.token;
+      const data: LoginResponse = await response.json()
+      const token: string = data.token
       // トークンをクッキーに保存する
-      const expirationDate: Date = new Date();
-      expirationDate.setDate(expirationDate.getDate() + 1); // トークンの有効期限を1日に設定
-      const cookieOptions: string = `path=/; expires=${expirationDate.toUTCString()}`;
-      document.cookie = `token=${token}; ${cookieOptions}`;     
+      const expirationDate: Date = new Date()
+      expirationDate.setDate(expirationDate.getDate() + 1) // トークンの有効期限を1日に設定
+      const cookieOptions: string = `path=/; expires=${expirationDate.toUTCString()}`
+      document.cookie = `token=${token}; ${cookieOptions}`
       // ログイン成功後のリダイレクト
-      router.push('/');
-
+      router.push('/')
     } catch (error) {
-        if (error instanceof Error) {
-          setError(error.message);
-        } else {
-          setError('An unknown error occurred');
-        }
+      if (error instanceof Error) {
+        setError(error.message)
+      } else {
+        setError('An unknown error occurred')
       }
-    };
-/*   const fetchSomeProtectedResource = async (token: string) => {
+    }
+  }
+  /*   const fetchSomeProtectedResource = async (token: string) => {
     try {
       const response = await fetch('/api/admin', {
         headers: {
@@ -69,7 +68,7 @@ const LoginForm = () => {
       <button onClick={handleLogin}>Login</button>
       {error && <p>{error}</p>}
     </div>
-  );
-};
+  )
+}
 
-export default LoginForm;
+export default LoginForm
