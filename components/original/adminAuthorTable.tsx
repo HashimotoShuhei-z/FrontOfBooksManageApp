@@ -10,6 +10,7 @@ import TablePagination from "./tablePagination";
 import Link from "next/link";
 import { Button, buttonVariants } from "../ui/button";
 import { UpdateAuthor } from "./updateAuthor";
+import { DeleteAuthor } from "./deleteAuthor";
   
   async function getAuthorsData(name:string, page:number) {
     //引数なしでクエリのないオブジェクトを作成
@@ -62,7 +63,7 @@ import { UpdateAuthor } from "./updateAuthor";
                   <TableCell>{author.created_user.name}</TableCell>
                 }
                 <TableCell> <UpdateAuthor id={author.id} name={author.name} /> </TableCell>
-                <TableCell>削除</TableCell>
+                <TableCell> <DeleteAuthor id={author.id} /> </TableCell>
               </TableRow>
             ))}
           </TableBody>

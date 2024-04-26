@@ -11,6 +11,7 @@ import { metadata } from "@/app/layout";
 import Link from "next/link";
 import { buttonVariants } from "../ui/button";
 import { UpdateBook } from "./updateBook";
+import { DeleteBook } from "./deleteBook";
 
   async function getBooksData(title:string, page:number) {
     //引数なしでクエリのないオブジェクトを作成
@@ -40,7 +41,7 @@ import { UpdateBook } from "./updateBook";
 
     return (
       <div>
-        <Table>  {/* TODO:作成ボタンを実装 */}
+        <Table> 
           <TableHeader>
             <TableRow>
               <TableHead>タイトル</TableHead>
@@ -65,7 +66,7 @@ import { UpdateBook } from "./updateBook";
                   <TableCell>{book.created_user.name}</TableCell>
                 }
                 <TableCell> <UpdateBook id={book.id} title={book.title} author_id={book.author_id} /></TableCell> 
-                <TableCell>削除</TableCell> {/* TODO:削除ボタンを実装 */}
+                <TableCell> <DeleteBook id={book.id} /> </TableCell> {/* TODO:削除ボタンを実装 */}
               </TableRow>
             ))}
           </TableBody>
