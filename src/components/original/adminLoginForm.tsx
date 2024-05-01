@@ -38,7 +38,7 @@ const AdminLoginForm = () => {
       // トークンをクッキーに保存する
       const expirationDate: Date = new Date()
       expirationDate.setDate(expirationDate.getDate() + 1) // トークンの有効期限を1日に設定
-      const cookieOptions: string = `path=/; expires=${expirationDate.toUTCString()}`
+      const cookieOptions: string = `path=/admin; expires=${expirationDate.toUTCString()}`
       document.cookie = `token=${token}; ${cookieOptions}`
 
       //ログイン成功後のリダイレクト
