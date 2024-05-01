@@ -8,3 +8,11 @@ export const getAllCookies = (): string => {
     .join(';')
   return cookie
 }
+
+export const getToken = (): string | undefined => {
+  // クッキーからトークンを取得
+  const token = getAllCookies()
+    .split('; ')
+    .find((cookie) => cookie.startsWith('token='))
+  return token
+}

@@ -3,6 +3,7 @@ import TablePagination from './tablePagination'
 import { metadata } from '@/app/layout'
 import Link from 'next/link'
 import { buttonVariants } from '../ui/button'
+import { getToken } from '@/lib/auth'
 
 async function getBooksData(title: string, page: number) {
   //引数なしでクエリのないオブジェクトを作成
@@ -11,9 +12,15 @@ async function getBooksData(title: string, page: number) {
   //キーと値のペアをオブジェクトに追加
   params.append('title', title)
   params.append('page', page.toString())
+  // クッキーからトークンを取得
+  const token = getToken()
 
   // params.toString() で ?title=タイトル&page=ページ番号 という文字列を作成
-  const response = await fetch(`http://localhost/api/books?${params.toString()}`, {
+  const response = await fetch(`http://localhost/api/user/books?${params.toString()}`, {
+    headers: {
+      'Content-Type': 'application/json',
+      Authorization: token ? `Bearer ${token.split('=')[1]}` : '' // クッキー文字列のトークンの値部分のみ抽出
+    },
     cache: 'no-store'
   })
 
@@ -50,7 +57,11 @@ export default async function UserBookTable({ title, page }: { title: string; pa
                 </Link>
               </TableCell>
               <TableCell>{book.created_at}</TableCell>
-              <TableCell>{book.created_user.name}</TableCell>
+              {book.created_user == null ? (
+                <TableCell>null</TableCell>
+              ) : (
+                <TableCell>{book.created_user.name}</TableCell>
+              )}
               <TableCell></TableCell>
               <TableCell></TableCell>
             </TableRow>

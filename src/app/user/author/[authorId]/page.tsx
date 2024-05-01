@@ -1,10 +1,18 @@
 import TablePagination from '@/components/original/tablePagination'
 import { buttonVariants } from '@/components/ui/button'
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table'
+import { getToken } from '@/lib/auth'
 import Link from 'next/link'
 
 async function getAuthorsData(id: number) {
-  const response = await fetch(`http://localhost/api/authors/${id}`, {
+  // クッキーからトークンを取得
+  const token = getToken()
+
+  const response = await fetch(`http://localhost/api/user/authors/${id}`, {
+    headers: {
+      'Content-Type': 'application/json',
+      Authorization: token ? `Bearer ${token.split('=')[1]}` : '' // クッキー文字列のトークンの値部分のみ抽出
+    },
     cache: 'no-store'
   })
 

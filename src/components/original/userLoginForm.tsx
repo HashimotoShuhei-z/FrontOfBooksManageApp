@@ -9,7 +9,7 @@ interface LoginResponse {
   token: string
 }
 
-const AdminLoginForm = () => {
+const UserLoginForm = () => {
   const [email, setEmail] = useState<string>('')
   const [password, setPassword] = useState<string>('')
   const [error, setError] = useState<string>('')
@@ -19,7 +19,7 @@ const AdminLoginForm = () => {
   const handleLogin = async (e: React.FormEvent<HTMLFormElement>) => {
     try {
       e.preventDefault()
-      const response = await fetch('http://localhost/api/admin/login', {
+      const response = await fetch('http://localhost/api/user/login', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json'
@@ -38,12 +38,12 @@ const AdminLoginForm = () => {
       // トークンをクッキーに保存する
       const expirationDate: Date = new Date()
       expirationDate.setDate(expirationDate.getDate() + 1) // トークンの有効期限を1日に設定
-      const cookieOptions: string = `path=/admin; expires=${expirationDate.toUTCString()}`
+      const cookieOptions: string = `path=/user; expires=${expirationDate.toUTCString()}`
       document.cookie = `token=${token}; ${cookieOptions}`
 
       //ログイン成功後のリダイレクト
       toast({ description: 'ログインに成功しました！', type: 'foreground' })
-      console.log('Admin Login successfully')
+      console.log('User Login successfully')
       router.push('./home')
     } catch (error) {
       toast({ variant: 'destructive', description: 'emailかpasswordが間違っています', type: 'foreground' })
@@ -58,7 +58,7 @@ const AdminLoginForm = () => {
 
   return (
     <div className="w-96 p-6 space-y-8 sm:p-8 bg-white rounded-lg shadow-xl dark:bg-gray-800 mx-auto mt-10">
-      <h2 className="text-2xl font-bold text-gray-900 dark:text-white text-center">管理者ログイン</h2>
+      <h2 className="text-2xl font-bold text-gray-900 dark:text-white text-center">社員ログイン</h2>
       <form className="mt-8 space-y-6" onSubmit={handleLogin}>
         <div>
           <label htmlFor="email" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
@@ -93,7 +93,7 @@ const AdminLoginForm = () => {
         <div className="flex justify-center">{<Button type="submit">Login</Button>}</div>
         <div className="text-sm font-medium text-gray-900 dark:text-white px-20 ">
           未登録の方は
-          <Link href="/admin/register" className="text-blue-600 hover:underline dark:text-blue-500">
+          <Link href="/user/register" className="text-blue-600 hover:underline dark:text-blue-500">
             新規登録
           </Link>
         </div>
@@ -102,4 +102,4 @@ const AdminLoginForm = () => {
   )
 }
 
-export default AdminLoginForm
+export default UserLoginForm
