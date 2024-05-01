@@ -5,17 +5,25 @@ import Link from 'next/link'
 import { buttonVariants } from '../ui/button'
 import { UpdateBook } from './updateBook'
 import { DeleteBook } from './deleteBook'
+import { getAllCookies } from '@/lib/auth'
 
 async function getBooksData(title: string, page: number) {
   //引数なしでクエリのないオブジェクトを作成
   const params = new URLSearchParams()
-
   //キーと値のペアをオブジェクトに追加
   params.append('title', title)
   params.append('page', page.toString())
+  // クッキーからトークンを取得
+  const token = getAllCookies()
+    .split('; ')
+    .find((cookie) => cookie.startsWith('token='))
 
   // params.toString() で ?title=タイトル&page=ページ番号 という文字列を作成
-  const response = await fetch(`http://localhost/api/books?${params.toString()}`, {
+  const response = await fetch(`http://localhost/api/admin/books?${params.toString()}`, {
+    headers: {
+      'Content-Type': 'application/json',
+      Authorization: token ? `Bearer ${token.split('=')[1]}` : '' // クッキー文字列のトークンの値部分のみ抽出
+    },
     cache: 'no-store'
   })
 
