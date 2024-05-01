@@ -1,6 +1,6 @@
 'use client'
 import { useRouter } from 'next/navigation'
-import { useState } from 'react'
+import React, { useState } from 'react'
 import { Button } from '../ui/button'
 import Link from 'next/link'
 import { Input } from '../ui/input'
@@ -16,8 +16,9 @@ const AdminLoginForm = () => {
   const router = useRouter()
   const { toast } = useToast()
 
-  const handleLogin = async () => {
+  const handleLogin = async (e: React.FormEvent<HTMLFormElement>) => {
     try {
+      e.preventDefault()
       const response = await fetch('http://localhost/api/admin/login', {
         method: 'POST',
         headers: {
@@ -27,6 +28,8 @@ const AdminLoginForm = () => {
       })
 
       if (!response.ok) {
+        console.error({ response })
+        console.error({ json: await response.json() })
         throw new Error('Invalid username or password')
       }
 
@@ -35,12 +38,13 @@ const AdminLoginForm = () => {
       // トークンをクッキーに保存する
       const expirationDate: Date = new Date()
       expirationDate.setDate(expirationDate.getDate() + 1) // トークンの有効期限を1日に設定
-      const cookieOptions: string = `path=/user; expires=${expirationDate.toUTCString()}`
+      const cookieOptions: string = `path=/; expires=${expirationDate.toUTCString()}`
       document.cookie = `token=${token}; ${cookieOptions}`
-      // ログイン成功後のリダイレクト
+
+      //ログイン成功後のリダイレクト
       toast({ description: 'ログインに成功しました！', type: 'foreground' })
       console.log('Admin Login successfully')
-      router.push('/')
+      router.push('./home')
     } catch (error) {
       toast({ variant: 'destructive', description: 'emailかpasswordが間違っています', type: 'foreground' })
       if (error instanceof Error) {
@@ -55,7 +59,7 @@ const AdminLoginForm = () => {
   return (
     <div className="w-96 p-6 space-y-8 sm:p-8 bg-white rounded-lg shadow-xl dark:bg-gray-800 mx-auto mt-10">
       <h2 className="text-2xl font-bold text-gray-900 dark:text-white text-center">管理者ログイン</h2>
-      <form className="mt-8 space-y-6">
+      <form className="mt-8 space-y-6" onSubmit={handleLogin}>
         <div>
           <label htmlFor="email" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
             Email
@@ -87,7 +91,10 @@ const AdminLoginForm = () => {
           />
         </div>
         <div className="flex justify-center">
-          <Button onClick={handleLogin}>Login</Button>
+          {<Button type="submit">Login</Button>}
+          {/* <button className="border" type="submit">
+            Login
+          </button> */}
         </div>
         <div className="text-sm font-medium text-gray-900 dark:text-white px-20 ">
           未登録の方は
