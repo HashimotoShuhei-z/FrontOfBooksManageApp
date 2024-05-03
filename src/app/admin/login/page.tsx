@@ -1,12 +1,11 @@
 'use client'
 import Link from 'next/link'
-import React, { useEffect, useState } from 'react'
+import { useEffect } from 'react'
 import { buttonVariants } from '@/components/ui/button'
 import { useRouter } from 'next/navigation'
-
 import AdminLoginForm from '@/components/original/adminLoginForm'
 //もしcookieに認証トークンを保持していた場合、ホームにリダイレクトさせたい
-//すべてのクッキーをオブジェクトとして取得
+//すべてのクッキーをオブジェクトとして取得する関数
 export const getAllCookies = (): Record<string, string> => {
   const cookies = document.cookie.split('; ').reduce((acc, cookie) => {
     const [name, value] = cookie.split('=')
@@ -17,17 +16,26 @@ export const getAllCookies = (): Record<string, string> => {
 
 const page = () => {
   const router = useRouter()
-  //useEffectはコンポーネントが画面に表示された瞬間に処理をしてくれる
-  useEffect(() => {
+
+  // cookieの内容を見てハンドリングを行う
+  const checkTokenAndRedirect = () => {
     const cookies = getAllCookies()
     //トークン取得
     const token = cookies.token
+    console.log({ cookies, token })
     // トークンが存在する場合、ホーム画面に自動的に遷移させる
     if (token) {
-      console.log(1)
       router.push('./home')
     }
-  })
+  }
+
+  //useEffectはコンポーネントが画面に表示された瞬間に処理をしてくれる
+  useEffect(() => {
+    // ドキュメントの準備が完了した後に処理を実行
+    if (document.readyState === 'complete') {
+      checkTokenAndRedirect()
+    }
+  }, [document.readyState])
 
   return (
     <main className="w-screen h-screen">

@@ -1,6 +1,6 @@
 'use client'
 import { useRouter } from 'next/navigation'
-import React, { useEffect, useState } from 'react'
+import { useState } from 'react'
 import { Button } from '../ui/button'
 import Link from 'next/link'
 import { Input } from '../ui/input'
