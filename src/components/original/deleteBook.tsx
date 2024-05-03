@@ -1,16 +1,36 @@
 'use client'
-
 import { Button } from '@/components/ui/button'
 import { ToastAction } from '@/components/ui/toast'
 import { useToast } from '@/components/ui/use-toast'
+import { useEffect, useState } from 'react'
+
+//すべてのクッキーをオブジェクトとして取得
+export const getAllCookies = (): Record<string, string> => {
+  const cookies = document.cookie.split('; ').reduce((acc, cookie) => {
+    const [name, value] = cookie.split('=')
+    return { ...acc, [name]: value }
+  }, {})
+  return cookies
+}
 
 export function DeleteBook(obj: { id: number }) {
+  const [token, setToken] = useState<string | null>(null)
+  //クライアントサイドでのみ実行されるようにuseEffectフック内にラップ
+  useEffect(() => {
+    const cookies = getAllCookies()
+    const token = cookies.token
+    setToken(token)
+  }, [])
+
   const { toast } = useToast()
 
   async function handleDelete() {
     try {
-      const response = await fetch(`http://localhost/api/books/${obj.id}`, {
-        method: 'POST'
+      const response = await fetch(`http://localhost/api/admin/books/${obj.id}`, {
+        method: 'POST',
+        headers: {
+          Authorization: `Bearer ${token}`
+        }
       })
 
       if (!response.ok) {

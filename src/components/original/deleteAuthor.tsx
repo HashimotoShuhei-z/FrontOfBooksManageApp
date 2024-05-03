@@ -1,16 +1,36 @@
 'use client'
-
 import { Button } from '@/components/ui/button'
 import { ToastAction } from '@/components/ui/toast'
 import { useToast } from '@/components/ui/use-toast'
+import { useEffect, useState } from 'react'
+
+//すべてのクッキーをオブジェクトとして取得
+export const getAllCookies = (): Record<string, string> => {
+  const cookies = document.cookie.split('; ').reduce((acc, cookie) => {
+    const [name, value] = cookie.split('=')
+    return { ...acc, [name]: value }
+  }, {})
+  return cookies
+}
 
 export function DeleteAuthor(obj: { id: number }) {
+  const [token, setToken] = useState<string | null>(null)
+  //クライアントサイドでのみ実行されるようにuseEffectフック内にラップ
+  useEffect(() => {
+    const cookies = getAllCookies()
+    const token = cookies.token
+    setToken(token)
+  }, [])
+
   const { toast } = useToast()
 
   async function handleDelete() {
     try {
-      const response = await fetch(`http://localhost/api/authors/${obj.id}`, {
-        method: 'POST'
+      const response = await fetch(`http://localhost/api/admin/authors/${obj.id}`, {
+        method: 'POST',
+        headers: {
+          Authorization: `Bearer ${token}`
+        }
       })
 
       if (!response.ok) {
@@ -33,7 +53,6 @@ export function DeleteAuthor(obj: { id: number }) {
           description: '本当にこの著者データを削除しますか？ この著者の関連図書も削除されます。',
           action: (
             <ToastAction altText="Yes" onClick={() => handleDelete()}>
-              {' '}
               Yes
             </ToastAction>
           )

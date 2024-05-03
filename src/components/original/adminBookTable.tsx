@@ -1,11 +1,10 @@
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table'
 import TablePagination from './tablePagination'
-import { metadata } from '@/app/layout'
 import Link from 'next/link'
 import { buttonVariants } from '../ui/button'
 import { UpdateBook } from './updateBook'
 import { DeleteBook } from './deleteBook'
-import { getAllCookies } from '@/lib/auth'
+import { getToken } from '@/lib/auth'
 
 async function getBooksData(title: string, page: number) {
   //引数なしでクエリのないオブジェクトを作成
@@ -14,9 +13,7 @@ async function getBooksData(title: string, page: number) {
   params.append('title', title)
   params.append('page', page.toString())
   // クッキーからトークンを取得
-  const token = getAllCookies()
-    .split('; ')
-    .find((cookie) => cookie.startsWith('token='))
+  const token = getToken()
 
   // params.toString() で ?title=タイトル&page=ページ番号 という文字列を作成
   const response = await fetch(`http://localhost/api/admin/books?${params.toString()}`, {
@@ -69,14 +66,11 @@ export default async function AdminBookTable({ title, page }: { title: string; p
                 <TableCell>{book.created_user.name}</TableCell>
               )}
               <TableCell>
-                {' '}
                 <UpdateBook id={book.id} title={book.title} author_id={book.author_id} />
               </TableCell>
               <TableCell>
-                {' '}
-                <DeleteBook id={book.id} />{' '}
-              </TableCell>{' '}
-              {/* TODO:削除ボタンを実装 */}
+                <DeleteBook id={book.id} />
+              </TableCell>
             </TableRow>
           ))}
         </TableBody>
