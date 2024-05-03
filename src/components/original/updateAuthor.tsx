@@ -5,8 +5,26 @@ import { Sheet, SheetClose, SheetContent, SheetHeader, SheetTitle, SheetTrigger 
 import { Form, FormControl, FormDescription, FormField, FormItem, FormLabel, FormMessage } from '../ui/form'
 import { useForm } from 'react-hook-form'
 import { useToast } from '../ui/use-toast'
+import { useEffect, useState } from 'react'
+
+//すべてのクッキーをオブジェクトとして取得
+export const getAllCookies = (): Record<string, string> => {
+  const cookies = document.cookie.split('; ').reduce((acc, cookie) => {
+    const [name, value] = cookie.split('=')
+    return { ...acc, [name]: value }
+  }, {})
+  return cookies
+}
 
 export function UpdateAuthor(obj: { id: number; name: string }) {
+  const [token, setToken] = useState<string | null>(null)
+  //クライアントサイドでのみ実行されるようにuseEffectフック内にラップ
+  useEffect(() => {
+    const cookies = getAllCookies()
+    const token = cookies.token
+    setToken(token)
+  }, [])
+
   const form = useForm({
     defaultValues: {
       name: obj.name
@@ -17,12 +35,13 @@ export function UpdateAuthor(obj: { id: number; name: string }) {
 
   async function onSubmit(value: any) {
     try {
-      const response = await fetch(`http://localhost/api/authors/${obj.id}`, {
+      const response = await fetch(`http://localhost/api/admin/authors/${obj.id}`, {
         method: 'PUT',
         headers: {
-          'Content-Type': 'application/json'
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${token}`
         },
-        body: JSON.stringify(value) // dataを直接JSONに変換
+        body: JSON.stringify(value)
       })
 
       if (!response.ok) {

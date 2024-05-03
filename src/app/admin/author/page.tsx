@@ -3,7 +3,6 @@ import AuthorSearch from '@/components/original/authorSerch'
 import Link from 'next/link'
 import { buttonVariants } from '@/components/ui/button'
 import AdminAuthorTable from '@/components/original/adminAuthorTable'
-import { CreateAuthor } from '@/components/original/createAuthor'
 
 const page = ({
   searchParams //page.tsxのpage関数にはserchParamsかparamsというpropsを入れることが可能。現在のURLの?以降をオブジェクトに

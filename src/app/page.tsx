@@ -1,10 +1,6 @@
-'use client'
 import { buttonVariants } from '@/components/ui/button'
 import Link from 'next/link'
-import { useRouter } from 'next/navigation'
 export default function Home() {
-  const router = useRouter()
-
   return (
     <main className="h-screen w-screen">
       <div className="w-screen flex space-between justify-center items-center flex-wrap pt-32 pb-16">

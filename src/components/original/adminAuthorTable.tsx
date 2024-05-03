@@ -1,9 +1,10 @@
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table'
 import TablePagination from './tablePagination'
 import Link from 'next/link'
-import { Button, buttonVariants } from '../ui/button'
+import { buttonVariants } from '../ui/button'
 import { UpdateAuthor } from './updateAuthor'
 import { DeleteAuthor } from './deleteAuthor'
+import { getToken } from '@/lib/auth'
 
 async function getAuthorsData(name: string, page: number) {
   //引数なしでクエリのないオブジェクトを作成
@@ -12,9 +13,15 @@ async function getAuthorsData(name: string, page: number) {
   //キーと値のペアをオブジェクトに追加
   params.append('name', name)
   params.append('page', page.toString())
+  // クッキーからトークンを取得
+  const token = getToken()
 
   // params.toString() で ?title=タイトル&page=ページ番号 という文字列を作成
-  const response = await fetch(`http://localhost/api/authors?${params.toString()}`, {
+  const response = await fetch(`http://localhost/api/admin/authors?${params.toString()}`, {
+    headers: {
+      'Content-Type': 'application/json',
+      Authorization: token ? `Bearer ${token.split('=')[1]}` : '' // クッキー文字列のトークンの値部分のみ抽出
+    },
     cache: 'no-store'
   })
 
@@ -58,12 +65,10 @@ export default async function AdminAuthorTable({ name, page }: { name: string; p
                 <TableCell>{author.created_user.name}</TableCell>
               )}
               <TableCell>
-                {' '}
-                <UpdateAuthor id={author.id} name={author.name} />{' '}
+                <UpdateAuthor id={author.id} name={author.name} />
               </TableCell>
               <TableCell>
-                {' '}
-                <DeleteAuthor id={author.id} />{' '}
+                <DeleteAuthor id={author.id} />
               </TableCell>
             </TableRow>
           ))}

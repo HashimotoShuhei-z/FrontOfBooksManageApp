@@ -3,10 +3,18 @@ import TablePagination from '@/components/original/tablePagination'
 import { UpdateBook } from '@/components/original/updateBook'
 import { buttonVariants } from '@/components/ui/button'
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table'
+import { getToken } from '@/lib/auth'
 import Link from 'next/link'
 
 async function getAuthorsData(id: number) {
-  const response = await fetch(`http://localhost/api/authors/${id}`, {
+  // クッキーからトークンを取得
+  const token = getToken()
+
+  const response = await fetch(`http://localhost/api/admin/authors/${id}`, {
+    headers: {
+      'Content-Type': 'application/json',
+      Authorization: token ? `Bearer ${token.split('=')[1]}` : '' // クッキー文字列のトークンの値部分のみ抽出
+    },
     cache: 'no-store'
   })
 
@@ -42,14 +50,11 @@ export default async function Page({ params }: { params: { authorId: number } })
                   <TableCell>{book.created_user.name}</TableCell>
                 )}
                 <TableCell>
-                  {' '}
                   <UpdateBook id={book.id} title={book.title} author_id={book.author_id} />
                 </TableCell>
                 <TableCell>
-                  {' '}
-                  <DeleteBook id={book.id} />{' '}
-                </TableCell>{' '}
-                {/* TODO:削除ボタンを実装 */}
+                  <DeleteBook id={book.id} />
+                </TableCell>
               </TableRow>
             ))}
           </TableBody>
