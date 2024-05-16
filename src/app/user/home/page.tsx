@@ -1,3 +1,4 @@
+import Logout from '@/components/original/logout'
 import { buttonVariants } from '@/components/ui/button'
 import Link from 'next/link'
 export default function Home() {
@@ -17,11 +18,7 @@ export default function Home() {
           著者一覧
         </Link>
       </div>
-      <div className="ml-8">
-        <Link href="/" className={buttonVariants({ variant: 'outline', size: 'top', className: 'my-8' })}>
-          トップページに戻る
-        </Link>
-      </div>
+      <Logout person="user" />
     </main>
   )
 }

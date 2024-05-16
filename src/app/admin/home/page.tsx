@@ -1,5 +1,7 @@
+import Logout from '@/components/original/logout'
 import { buttonVariants } from '@/components/ui/button'
 import Link from 'next/link'
+//TODO:認証トークンを保持していないと、ページにアクセスできないようにする
 export default function Home() {
   return (
     <main className="h-screen w-screen">
@@ -17,11 +19,7 @@ export default function Home() {
           著者一覧
         </Link>
       </div>
-      <div className="ml-8">
-        <Link href="/" className={buttonVariants({ variant: 'outline', size: 'top', className: 'my-8' })}>
-          ログアウト
-        </Link>
-      </div>
+      <Logout person="admin" />
     </main>
   )
 }
