@@ -25,8 +25,6 @@ export default function RootLayout({
           <h1 className="flex items-center text-4xl font-semibold">図書管理アプリ</h1>
         </header>
         {children}
-        {/*         <script src="../path/to/flowbite/dist/flowbite.min.js"></script>
-         */}{' '}
         <Toaster />
       </body>
     </html>
