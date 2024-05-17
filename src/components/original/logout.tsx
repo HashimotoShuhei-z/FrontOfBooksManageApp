@@ -2,15 +2,7 @@
 import { useRouter } from 'next/navigation'
 import { Button } from '../ui/button'
 import { useEffect, useState } from 'react'
-
-//すべてのクッキーをオブジェクトとして取得する関数
-export const getAllCookies = (): Record<string, string> => {
-  const cookies = document.cookie.split('; ').reduce((acc, cookie) => {
-    const [name, value] = cookie.split('=')
-    return { ...acc, [name]: value }
-  }, {})
-  return cookies
-}
+import { getToken } from '@/lib/getCookieCSR'
 
 // クッキーを削除する関数
 const deleteCookie = (name: string, validRange: string) => {
@@ -22,8 +14,7 @@ const Logout = (props: { person: string }) => {
   const [token, setToken] = useState<string | null>(null)
   //クライアントサイドでのみ実行されるようにuseEffectフック内にラップ
   useEffect(() => {
-    const cookies = getAllCookies()
-    const token = cookies.token
+    const token = getToken()
     setToken(token)
   }, [])
 
