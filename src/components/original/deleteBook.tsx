@@ -2,23 +2,14 @@
 import { Button } from '@/components/ui/button'
 import { ToastAction } from '@/components/ui/toast'
 import { useToast } from '@/components/ui/use-toast'
+import { getToken } from '@/lib/getCookieCSR'
 import { useEffect, useState } from 'react'
-
-//すべてのクッキーをオブジェクトとして取得
-export const getAllCookies = (): Record<string, string> => {
-  const cookies = document.cookie.split('; ').reduce((acc, cookie) => {
-    const [name, value] = cookie.split('=')
-    return { ...acc, [name]: value }
-  }, {})
-  return cookies
-}
 
 export function DeleteBook(obj: { id: number }) {
   const [token, setToken] = useState<string | null>(null)
   //クライアントサイドでのみ実行されるようにuseEffectフック内にラップ
   useEffect(() => {
-    const cookies = getAllCookies()
-    const token = cookies.token
+    const token = getToken()
     setToken(token)
   }, [])
 

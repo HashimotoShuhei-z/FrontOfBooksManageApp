@@ -1,7 +1,7 @@
 import Logout from '@/components/original/logout'
 import { buttonVariants } from '@/components/ui/button'
 import Link from 'next/link'
-//TODO:認証トークンを保持していないと、ページにアクセスできないようにする
+
 export default function Home() {
   return (
     <main className="h-screen w-screen">

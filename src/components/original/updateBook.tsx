@@ -2,26 +2,17 @@
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { Sheet, SheetClose, SheetContent, SheetHeader, SheetTitle, SheetTrigger } from '@/components/ui/sheet'
-import { Form, FormControl, FormDescription, FormField, FormItem, FormLabel, FormMessage } from '../ui/form'
+import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '../ui/form'
 import { useForm } from 'react-hook-form'
 import { useToast } from '../ui/use-toast'
 import { useEffect, useState } from 'react'
-
-//すべてのクッキーをオブジェクトとして取得
-export const getAllCookies = (): Record<string, string> => {
-  const cookies = document.cookie.split('; ').reduce((acc, cookie) => {
-    const [name, value] = cookie.split('=')
-    return { ...acc, [name]: value }
-  }, {})
-  return cookies
-}
+import { getToken } from '@/lib/getCookieCSR'
 
 export function UpdateBook(obj: { id: number; title: string; author_id: number }) {
   const [token, setToken] = useState<string | null>(null)
   //クライアントサイドでのみ実行されるようにuseEffectフック内にラップ
   useEffect(() => {
-    const cookies = getAllCookies()
-    const token = cookies.token
+    const token = getToken()
     setToken(token)
   }, [])
 

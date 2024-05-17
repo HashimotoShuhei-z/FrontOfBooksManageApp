@@ -4,7 +4,7 @@ import Link from 'next/link'
 import { buttonVariants } from '../ui/button'
 import { UpdateAuthor } from './updateAuthor'
 import { DeleteAuthor } from './deleteAuthor'
-import { getToken } from '@/lib/auth'
+import { getToken } from '@/lib/getCookieSSR'
 
 async function getAuthorsData(name: string, page: number) {
   //引数なしでクエリのないオブジェクトを作成

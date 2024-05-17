@@ -2,7 +2,7 @@ import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@
 import TablePagination from './tablePagination'
 import Link from 'next/link'
 import { buttonVariants } from '../ui/button'
-import { getToken } from '@/lib/auth'
+import { getToken } from '@/lib/getCookieSSR'
 
 async function getAuthorsData(name: string, page: number) {
   //引数なしでクエリのないオブジェクトを作成

@@ -2,7 +2,6 @@ import Link from 'next/link'
 import { buttonVariants } from '@/components/ui/button'
 import AdminRegisterForm from '@/components/original/adminRegisterForm'
 
-//TODO:登録処理を実装する
 const page = () => {
   return (
     <main className="w-screen h-screen">

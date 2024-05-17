@@ -3,7 +3,7 @@ import TablePagination from '@/components/original/tablePagination'
 import { UpdateBook } from '@/components/original/updateBook'
 import { buttonVariants } from '@/components/ui/button'
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table'
-import { getToken } from '@/lib/auth'
+import { getToken } from '@/lib/getCookieSSR'
 import Link from 'next/link'
 
 async function getAuthorsData(id: number) {
