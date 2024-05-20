@@ -1,6 +1,6 @@
 'use client'
 import { useRouter } from 'next/navigation'
-import { Button } from '../ui/button'
+import { Button } from '../parts/button'
 import { useEffect, useState } from 'react'
 import { getToken } from '@/lib/getCookieCSR'
 

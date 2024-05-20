@@ -1,6 +1,6 @@
-import TablePagination from '@/components/original/tablePagination'
-import { buttonVariants } from '@/components/ui/button'
-import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table'
+import TablePagination from '@/components/partsGroups/tablePagination'
+import { buttonVariants } from '@/components/parts/button'
+import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/partsGroups/table'
 import { getToken } from '@/lib/getCookieSSR'
 import Link from 'next/link'
 

@@ -1,9 +1,7 @@
-import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table'
-import TablePagination from './tablePagination'
+import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/partsGroups/table'
+import TablePagination from '../partsGroups/tablePagination'
 import Link from 'next/link'
-import { buttonVariants } from '../ui/button'
-import { UpdateAuthor } from './updateAuthor'
-import { DeleteAuthor } from './deleteAuthor'
+import { buttonVariants } from '../parts/button'
 import { getToken } from '@/lib/getCookieSSR'
 
 async function getAuthorsData(name: string, page: number) {
@@ -17,7 +15,7 @@ async function getAuthorsData(name: string, page: number) {
   const token = getToken()
 
   // params.toString() で ?title=タイトル&page=ページ番号 という文字列を作成
-  const response = await fetch(`http://localhost/api/admin/authors?${params.toString()}`, {
+  const response = await fetch(`http://localhost/api/user/authors?${params.toString()}`, {
     headers: {
       'Content-Type': 'application/json',
       Authorization: token ? `Bearer ${token.split('=')[1]}` : '' // クッキー文字列のトークンの値部分のみ抽出
@@ -29,7 +27,7 @@ async function getAuthorsData(name: string, page: number) {
   return authorsData
 }
 
-export default async function AdminAuthorTable({ name, page }: { name: string; page: number }) {
+export default async function UserAuthorTable({ name, page }: { name: string; page: number }) {
   const authorsData = await getAuthorsData(name, page)
 
   return (
@@ -48,13 +46,7 @@ export default async function AdminAuthorTable({ name, page }: { name: string; p
           {authorsData.author.map((author) => (
             <TableRow>
               <TableCell className="font-medium">
-                <Link
-                  href={`./author/${author.id}`}
-                  className={buttonVariants({
-                    variant: 'link',
-                    size: 'smallLink'
-                  })}
-                >
+                <Link href={`./author/${author.id}`} className={buttonVariants({ variant: 'link', size: 'smallLink' })}>
                   {author.name}
                 </Link>
               </TableCell>
@@ -64,12 +56,8 @@ export default async function AdminAuthorTable({ name, page }: { name: string; p
               ) : (
                 <TableCell>{author.created_user.name}</TableCell>
               )}
-              <TableCell>
-                <UpdateAuthor id={author.id} name={author.name} />
-              </TableCell>
-              <TableCell>
-                <DeleteAuthor id={author.id} />
-              </TableCell>
+              <TableCell></TableCell>
+              <TableCell></TableCell>
             </TableRow>
           ))}
         </TableBody>

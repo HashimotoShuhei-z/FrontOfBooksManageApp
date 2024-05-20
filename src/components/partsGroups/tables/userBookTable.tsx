@@ -1,8 +1,8 @@
-import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table'
-import TablePagination from './tablePagination'
+import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/partsGroups/table'
+import TablePagination from '../partsGroups/tablePagination'
 import { metadata } from '@/app/layout'
 import Link from 'next/link'
-import { buttonVariants } from '../ui/button'
+import { buttonVariants } from '../parts/button'
 import { getToken } from '@/lib/getCookieSSR'
 
 async function getBooksData(title: string, page: number) {

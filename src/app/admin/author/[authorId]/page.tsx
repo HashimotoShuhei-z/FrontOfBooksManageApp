@@ -1,10 +1,10 @@
-import { DeleteBook } from '@/components/original/deleteBook'
-import TablePagination from '@/components/original/tablePagination'
-import { UpdateBook } from '@/components/original/updateBook'
-import { buttonVariants } from '@/components/ui/button'
-import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table'
+import { DeleteBook } from '@/components/partsGroups/delete/deleteBook'
+import TablePagination from '@/components/partsGroups/tablePagination'
+import { buttonVariants } from '@/components/parts/button'
+import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/partsGroups/table'
 import { getToken } from '@/lib/getCookieSSR'
 import Link from 'next/link'
+import { UpdateBook } from '@/components/partsGroups/update/updateBook'
 
 async function getAuthorsData(id: number) {
   // クッキーからトークンを取得

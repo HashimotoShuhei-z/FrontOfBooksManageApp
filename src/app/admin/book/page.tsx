@@ -1,8 +1,8 @@
 import React from 'react'
-import BookSearch from '@/components/original/bookSerch'
+import BookSearch from '@/components/partsGroups/serchForm/serchBook'
 import Link from 'next/link'
-import { buttonVariants } from '@/components/ui/button'
-import AdminBookTable from '@/components/original/adminBookTable'
+import { buttonVariants } from '@/components/parts/button'
+import AdminBookTable from '@/components/partsGroups/tables/adminBookTable'
 
 const page = ({
   searchParams //page.tsxのpage関数にはserchParamsかparamsというpropsを入れることが可能

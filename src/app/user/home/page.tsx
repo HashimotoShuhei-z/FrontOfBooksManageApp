@@ -1,5 +1,5 @@
-import Logout from '@/components/original/logout'
-import { buttonVariants } from '@/components/ui/button'
+import Logout from '@/components/partsGroups/logout'
+import { buttonVariants } from '@/components/parts/button'
 import Link from 'next/link'
 export default function Home() {
   return (

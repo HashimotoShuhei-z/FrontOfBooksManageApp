@@ -1,9 +1,9 @@
 'use client'
 import { useRouter } from 'next/navigation'
 import { useState } from 'react'
-import { Button } from '../ui/button'
-import { Input } from '../ui/input'
-import { useToast } from '../ui/use-toast'
+import { Button } from '../../parts/button'
+import { Input } from '../../parts/input'
+import { useToast } from '../use-toast'
 
 const UserRegisterForm = () => {
   const [userName, setUserName] = useState<string>('')

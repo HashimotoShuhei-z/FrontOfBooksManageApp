@@ -1,8 +1,8 @@
 import React from 'react'
-import AuthorSearch from '@/components/original/authorSerch'
+import AuthorSearch from '@/components/partsGroups/serchForm/authorSerch'
 import Link from 'next/link'
-import { buttonVariants } from '@/components/ui/button'
-import UserAuthorTable from '@/components/original/userAuthorTable'
+import { buttonVariants } from '@/components/parts/button'
+import UserAuthorTable from '@/components/pages/userAuthorTable'
 
 const page = ({
   searchParams //page.tsxのpage関数にはserchParamsかparamsというpropsを入れることが可能。現在のURLの?以降をオブジェクトに

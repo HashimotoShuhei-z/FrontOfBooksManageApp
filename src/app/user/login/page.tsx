@@ -1,7 +1,7 @@
 'use client'
 import Link from 'next/link'
-import { buttonVariants } from '@/components/ui/button'
-import UserLoginForm from '@/components/original/userLoginForm'
+import { buttonVariants } from '@/components/parts/button'
+import UserLoginForm from '@/components/partsGroups/loginForms/userLoginForm'
 
 const page = () => {
   return (

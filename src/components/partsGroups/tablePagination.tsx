@@ -7,7 +7,7 @@ import {
   PaginationLink,
   PaginationNext,
   PaginationPrevious
-} from '@/components/ui/pagination'
+} from '@/components/partsGroups/pagination'
 import { usePathname, useSearchParams } from 'next/navigation'
 
 export default function TablePagination({ totalPages }: { totalPages: number }) {

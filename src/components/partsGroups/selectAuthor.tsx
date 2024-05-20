@@ -8,7 +8,7 @@ import {
   SelectLabel,
   SelectTrigger,
   SelectValue
-} from '@/components/ui/select'
+} from '@/components/partsGroups/select'
 
 export function SelectAuthor() {
   return (

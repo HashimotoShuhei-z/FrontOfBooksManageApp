@@ -1,9 +1,9 @@
 'use client'
 import { useRouter } from 'next/navigation'
 import { useState } from 'react'
-import { Button } from '../ui/button'
+import { Button } from '../parts/button'
 import Link from 'next/link'
-import { Input } from '../ui/input'
+import { Input } from '../parts/input'
 import { useToast } from '../ui/use-toast'
 interface LoginResponse {
   token: string

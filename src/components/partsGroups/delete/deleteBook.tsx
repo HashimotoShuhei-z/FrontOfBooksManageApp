@@ -1,7 +1,7 @@
 'use client'
-import { Button } from '@/components/ui/button'
-import { ToastAction } from '@/components/ui/toast'
-import { useToast } from '@/components/ui/use-toast'
+import { Button } from '@/components/parts/button'
+import { ToastAction } from '@/components/partsGroups/toast'
+import { useToast } from '@/components/partsGroups/use-toast'
 import { getToken } from '@/lib/getCookieCSR'
 import { useEffect, useState } from 'react'
 
