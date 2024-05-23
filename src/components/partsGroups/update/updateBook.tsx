@@ -2,11 +2,11 @@
 import { Button } from '@/components/parts/button'
 import { Input } from '@/components/parts/input'
 import { Sheet, SheetClose, SheetContent, SheetHeader, SheetTitle, SheetTrigger } from '@/components/partsGroups/sheet'
-import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '../partsGroups/form'
+import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '../form'
 import { useForm } from 'react-hook-form'
-import { useToast } from '../ui/use-toast'
 import { useEffect, useState } from 'react'
 import { getToken } from '@/lib/getCookieCSR'
+import { useToast } from '../use-toast'
 
 export function UpdateBook(obj: { id: number; title: string; author_id: number }) {
   const [token, setToken] = useState<string | null>(null)
@@ -63,7 +63,7 @@ export function UpdateBook(obj: { id: number; title: string; author_id: number }
               <FormField
                 control={form.control}
                 name="title"
-                render={({ field }) => (
+                render={({ field }: any) => (
                   <FormItem>
                     <FormLabel>タイトル:</FormLabel>
                     <FormControl>
@@ -76,7 +76,7 @@ export function UpdateBook(obj: { id: number; title: string; author_id: number }
               <FormField
                 control={form.control}
                 name="author_id"
-                render={({ field }) => (
+                render={({ field }: any) => (
                   <FormItem>
                     <FormLabel>著者id:</FormLabel>
                     <FormControl>
