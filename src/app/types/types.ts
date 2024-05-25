@@ -34,16 +34,16 @@ interface Author {
   books: Book[]
   created_user: Admin | null
   updated_user: Admin | null
+  components: (author: Author) => React.ReactNode[]
 }
 
 interface AuthorsData {
   authors: Author[]
-  books: Book[]
-  meta: Meta
+  meta: Meta | undefined
 }
 
 interface AuthorData {
-  authors: Author
+  author: Author
   books: Book[]
   meta: Meta
 }
