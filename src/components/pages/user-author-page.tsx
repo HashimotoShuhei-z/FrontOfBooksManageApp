@@ -1,25 +1,22 @@
 'use client'
-//このページはCSRで良い？？
-import React, { useEffect, useState } from 'react'
-import BookSearch from '@/components/partsGroups/serchForm/serchBook'
+import { useEffect, useState } from 'react'
 import Link from 'next/link'
 import { buttonVariants } from '@/components/parts/button'
 import { getToken } from '@/lib/getCookieCSR'
-import BookTable from '@/components/partsGroups/tables/book-table'
-import { UpdateBook } from '../partsGroups/update/updateBook'
-import { DeleteBook } from '../partsGroups/delete/deleteBook'
+import AuthorSearch from '../partsGroups/serchForm/serchAuthor'
+import AuthorTable from '@/components/partsGroups/tables/author-table'
 
-async function fetchBooks(title: string, page: number) {
+async function fetchAuthors(name: string, page: number) {
   //引数なしでクエリのないオブジェクトを作成
   const params = new URLSearchParams()
   //キーと値のペアをオブジェクトに追加
-  params.append('title', title)
+  params.append('name', name)
   params.append('page', page.toString())
   // クッキーからトークンを取得
   const token = getToken()
 
   // params.toString() で ?title=タイトル&page=ページ番号 という文字列を作成
-  const response = await fetch(`http://localhost/api/admin/books?${params.toString()}`, {
+  const response = await fetch(`http://localhost/api/user/authors?${params.toString()}`, {
     headers: {
       'Content-Type': 'application/json',
       Authorization: token ? `Bearer ${token.split('=')[1]}` : '' // クッキー文字列のトークンの値部分のみ抽出
@@ -28,43 +25,38 @@ async function fetchBooks(title: string, page: number) {
   })
 
   if (!response.ok) {
-    throw new Error('Failed to fetch books')
+    throw new Error('Failed to fetch authors')
   }
 
-  const booksData: BooksData = await response.json()
-  return booksData
+  const authorsData: AuthorsData = await response.json()
+  return authorsData
 }
 
-const AdminBookPage = ({
+const UserAuthorPage = ({
   searchParams //page.tsxのpage関数にはserchParamsかparamsというpropsを入れることが可能
 }: {
   searchParams?: {
     //TypeScriptにおけるOptionalChaining(なくてもいいよ、だけどない場合にも対応したいよ的な)
-    title?: string //↑プロパティが存在すればそのプロパティを返す、なければエラーundifinedを返す
+    name?: string //↑プロパティが存在すればそのプロパティを返す、なければエラーundifinedを返す
     page?: string
   }
 }) => {
-  const title = searchParams?.title || ''
+  const name = searchParams?.name || ''
   const page = Number(searchParams?.page) || 1
 
-  const [books, setBooks] = useState<Book[]>([])
+  const [authors, setAuthors] = useState<Author[]>([])
   const [meta, setMeta] = useState<Meta>()
   const [error, setError] = useState(null)
 
   useEffect(() => {
     setError(null)
 
-    fetchBooks(title, page)
+    fetchAuthors(name, page)
       .then((data) => {
-        setBooks(
-          data.books.map((book) => {
+        setAuthors(
+          data.authors.map((author) => {
             return {
-              ...book,
-              components: (book: Book) => [
-                <UpdateBook id={book.id} title={book.title} author_id={book.author_id} />,
-                <DeleteBook id={book.id} />
-                //既存のコンポーネントをPropsとともにtableコンポーネントへ送る
-              ]
+              ...author
             }
           })
         )
@@ -73,7 +65,7 @@ const AdminBookPage = ({
       .catch((err) => {
         setError(err.message)
       })
-  }, [title, page])
+  }, [name, page])
 
   if (error) {
     return <p>Error: {error}</p>
@@ -81,10 +73,10 @@ const AdminBookPage = ({
 
   return (
     <main className="w-screen h-screen">
-      <BookSearch placeholder="Serch books..." />
-      <div className="w-screen px-40 py-5">
-        <h2 className="mx-3 my-1 text-xl font-semibold">図書一覧</h2>
-        <BookTable books={books} meta={meta} />
+      <AuthorSearch placeholder="Serch authors..." />
+      <div className="w-screen px-40 pt-5">
+        <h2 className="mx-3 my-1 text-xl font-semibold">著者一覧</h2>
+        <AuthorTable authors={authors} meta={meta} />
       </div>
       <Link href="./home" className={buttonVariants({ variant: 'outline', size: 'top', className: 'my-8' })}>
         ホームに戻る
@@ -93,4 +85,4 @@ const AdminBookPage = ({
   )
 }
 
-export default AdminBookPage
+export default UserAuthorPage

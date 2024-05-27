@@ -2,8 +2,6 @@ import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@
 import TablePagination from '../tablePagination'
 import Link from 'next/link'
 import { buttonVariants } from '../../parts/button'
-import { UpdateBook } from '../update/updateBook'
-import { DeleteBook } from '../delete/deleteBook'
 
 export default async function AuthorDetailTable({ author, books, meta }: AuthorData) {
   return (
@@ -30,12 +28,14 @@ export default async function AuthorDetailTable({ author, books, meta }: AuthorD
                 ) : (
                   <TableCell>{book.created_user.name}</TableCell>
                 )}
-                <TableCell>
-                  <UpdateBook id={book.id} title={book.title} author_id={book.author_id} />
-                </TableCell>
-                <TableCell>
-                  <DeleteBook id={book.id} />
-                </TableCell>
+                {author.components && (
+                  <TableCell>
+                    {/* 任意の既存のコンポーネントをpagesコンポーネントから受け取って表示 */}
+                    {author.components(author).map((Component) => (
+                      <div key={author.id}>{Component}</div>
+                    ))}
+                  </TableCell>
+                )}
               </TableRow>
             ))}
           </TableBody>

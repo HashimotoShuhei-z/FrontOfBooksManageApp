@@ -1,25 +1,5 @@
-import Logout from '@/components/partsGroups/logout'
-import { buttonVariants } from '@/components/parts/button'
-import Link from 'next/link'
+import AdminHomePage from '@/components/pages/admin-home-page'
 
-export default function Home() {
-  return (
-    <main className="h-screen w-screen">
-      <div className="w-screen flex justify-center items-center flex-wrap pt-32 pb-12">
-        <Link
-          href="/admin/book"
-          className={buttonVariants({ variant: 'admin', size: 'mega', className: 'bg-green-600 hover:bg-green-800' })}
-        >
-          図書一覧
-        </Link>
-        <Link
-          href="/admin/author"
-          className={buttonVariants({ variant: 'admin', size: 'mega', className: 'bg-red-700 hover:bg-red-900' })}
-        >
-          著者一覧
-        </Link>
-      </div>
-      <Logout person="admin" />
-    </main>
-  )
+export default function Page() {
+  return <AdminHomePage />
 }

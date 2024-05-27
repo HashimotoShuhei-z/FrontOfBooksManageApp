@@ -6,8 +6,6 @@ import Link from 'next/link'
 import { buttonVariants } from '@/components/parts/button'
 import { getToken } from '@/lib/getCookieCSR'
 import BookTable from '@/components/partsGroups/tables/book-table'
-import { UpdateBook } from '../partsGroups/update/updateBook'
-import { DeleteBook } from '../partsGroups/delete/deleteBook'
 
 async function fetchBooks(title: string, page: number) {
   //引数なしでクエリのないオブジェクトを作成
@@ -19,7 +17,7 @@ async function fetchBooks(title: string, page: number) {
   const token = getToken()
 
   // params.toString() で ?title=タイトル&page=ページ番号 という文字列を作成
-  const response = await fetch(`http://localhost/api/admin/books?${params.toString()}`, {
+  const response = await fetch(`http://localhost/api/user/books?${params.toString()}`, {
     headers: {
       'Content-Type': 'application/json',
       Authorization: token ? `Bearer ${token.split('=')[1]}` : '' // クッキー文字列のトークンの値部分のみ抽出
@@ -35,7 +33,7 @@ async function fetchBooks(title: string, page: number) {
   return booksData
 }
 
-const AdminBookPage = ({
+const UserBookPage = ({
   searchParams //page.tsxのpage関数にはserchParamsかparamsというpropsを入れることが可能
 }: {
   searchParams?: {
@@ -59,12 +57,8 @@ const AdminBookPage = ({
         setBooks(
           data.books.map((book) => {
             return {
-              ...book,
-              components: (book: Book) => [
-                <UpdateBook id={book.id} title={book.title} author_id={book.author_id} />,
-                <DeleteBook id={book.id} />
-                //既存のコンポーネントをPropsとともにtableコンポーネントへ送る
-              ]
+              ...book
+              //TODO:userのアクションとして借り入れ機能を実装予定
             }
           })
         )
@@ -93,4 +87,4 @@ const AdminBookPage = ({
   )
 }
 
-export default AdminBookPage
+export default UserBookPage

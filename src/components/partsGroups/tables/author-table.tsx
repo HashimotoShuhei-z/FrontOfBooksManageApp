@@ -4,7 +4,6 @@ import Link from 'next/link'
 import { buttonVariants } from '../../parts/button'
 
 export default async function AuthorTable({ authors, meta }: AuthorsData) {
-
   return (
     <div>
       <Table>
@@ -37,12 +36,14 @@ export default async function AuthorTable({ authors, meta }: AuthorsData) {
               ) : (
                 <TableCell>{author.created_user.name}</TableCell>
               )}
-              <TableCell>
-                {/* 任意の既存のコンポーネントをpagesコンポーネントから受け取って表示 */}
-                {author.components(author).map((Component) => (
-                  <div key={author.id}>{Component}</div>
-                ))}
-              </TableCell>
+              {author.components && (
+                <TableCell>
+                  {/* 任意の既存のコンポーネントをpagesコンポーネントから受け取って表示 */}
+                  {author.components(author).map((Component) => (
+                    <div key={author.id}>{Component}</div>
+                  ))}
+                </TableCell>
+              )}
             </TableRow>
           ))}
         </TableBody>

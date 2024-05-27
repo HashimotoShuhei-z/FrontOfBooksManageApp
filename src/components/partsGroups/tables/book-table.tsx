@@ -36,12 +36,14 @@ export default async function BookTable({ books, meta }: BooksData) {
               ) : (
                 <TableCell>{book.created_user.name}</TableCell>
               )}
-              <TableCell>
-                {/* 任意の既存のコンポーネントをpagesコンポーネントから受け取って表示 */}
-                {book.components(book).map((Component) => (
-                  <div key={book.id}>{Component}</div>
-                ))}
-              </TableCell>
+              {book.components && (
+                <TableCell>
+                  {/* 任意の既存のコンポーネントをpagesコンポーネントから受け取って表示 */}
+                  {book.components(book).map((Component) => (
+                    <div key={book.id}>{Component}</div>
+                  ))}
+                </TableCell>
+              )}
             </TableRow>
           ))}
         </TableBody>
