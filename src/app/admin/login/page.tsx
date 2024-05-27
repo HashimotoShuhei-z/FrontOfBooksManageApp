@@ -1,6 +1,6 @@
 import Link from 'next/link'
-import { buttonVariants } from '@/components/ui/button'
-import AdminLoginForm from '@/components/original/adminLoginForm'
+import { buttonVariants } from '@/components/parts/button'
+import AdminLoginForm from '@/components/pages/adminLoginForm'
 
 const page = () => {
   return (

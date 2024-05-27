@@ -9,6 +9,8 @@ interface Book {
   author: Author
   created_user: Admin | null
   updated_user: Admin | null
+  //components プロパティを関数として定義し、そのコンポーネントが必要な props を受け取れるようにする
+  components: (book: Book) => React.ReactNode[]
 }
 
 interface Meta {
@@ -18,8 +20,8 @@ interface Meta {
 }
 
 interface BooksData {
-  book: Book[]
-  meta: Meta
+  books: Book[]
+  meta: Meta | undefined
 }
 
 interface Author {
@@ -29,20 +31,20 @@ interface Author {
   updated_at: string
   created_by: number | null
   updated_by: number | null
-  book: Book[]
+  books: Book[]
   created_user: Admin | null
   updated_user: Admin | null
+  components: (author: Author) => React.ReactNode[]
 }
 
 interface AuthorsData {
-  author: Author[]
-  book: Book[]
-  meta: Meta
+  authors: Author[]
+  meta: Meta | undefined
 }
 
 interface AuthorData {
   author: Author
-  book: Book[]
+  books: Book[]
   meta: Meta
 }
 

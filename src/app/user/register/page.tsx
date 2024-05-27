@@ -1,6 +1,6 @@
 import Link from 'next/link'
-import { buttonVariants } from '@/components/ui/button'
-import UserRegisterForm from '@/components/original/userRegisterForm'
+import { buttonVariants } from '@/components/parts/button'
+import UserRegisterForm from '@/components/partsGroups/registerForm/userRegisterForm'
 
 const page = () => {
   return (
