@@ -1,15 +1,10 @@
-import Link from 'next/link'
-import { buttonVariants } from '@/components/parts/button'
-import AdminLoginForm from '@/components/pages/adminLoginForm'
+import LoginForm from '@/components/partsGroups/login-form'
 
 const page = () => {
   return (
     <main className="w-screen h-screen">
       <div className="w-screen h-screen mx-auto lg:py-16 lg:grid-cols-2 gap-8 lg:gap-16">
-        <AdminLoginForm />
-        <Link href="/" className={buttonVariants({ variant: 'outline', size: 'top', className: 'my-8' })}>
-          トップページに戻る
-        </Link>
+        <LoginForm english="admin" japanese="管理者" />
       </div>
     </main>
   )

@@ -20,7 +20,7 @@ interface Meta {
 }
 
 interface BooksData {
-  books: Book[]
+  book: Book[]
   meta: Meta | undefined
 }
 
@@ -38,7 +38,7 @@ interface Author {
 }
 
 interface AuthorsData {
-  authors: Author[]
+  author: Author[] | undefined
   meta: Meta | undefined
 }
 

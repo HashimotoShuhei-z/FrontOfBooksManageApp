@@ -3,7 +3,7 @@ import TablePagination from '../tablePagination'
 import Link from 'next/link'
 import { buttonVariants } from '../../parts/button'
 
-export default async function AuthorTable({ authors, meta }: AuthorsData) {
+export default function AuthorTable({ author, meta }: AuthorsData) {
   return (
     <div>
       <Table>
@@ -17,8 +17,8 @@ export default async function AuthorTable({ authors, meta }: AuthorsData) {
           </TableRow>
         </TableHeader>
         <TableBody>
-          {authors.map((author) => (
-            <TableRow>
+          {author?.map((author) => (
+            <TableRow key={author.id}>
               <TableCell className="font-medium">
                 <Link
                   href={`./author/${author.id}`}

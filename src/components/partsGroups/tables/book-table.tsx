@@ -2,7 +2,7 @@ import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@
 import Link from 'next/link'
 import TablePagination from '../tablePagination'
 import { buttonVariants } from '@/components/parts/button'
-export default async function BookTable({ books, meta }: BooksData) {
+export default function BookTable({ book, meta }: BooksData) {
   return (
     <div>
       <Table>
@@ -16,31 +16,31 @@ export default async function BookTable({ books, meta }: BooksData) {
           </TableRow>
         </TableHeader>
         <TableBody>
-          {books.map((book: Book) => (
-            <TableRow key={book.id}>
-              <TableCell className="font-medium">{book.title}</TableCell>
+          {book.map((bookItem: Book) => (
+            <TableRow key={bookItem.id}>
+              <TableCell className="font-medium">{bookItem.title}</TableCell>
               <TableCell>
                 <Link
-                  href={`./author/${book.author_id}`}
+                  href={`./author/${bookItem.author_id}`}
                   className={buttonVariants({
                     variant: 'link',
                     size: 'smallLink'
                   })}
                 >
-                  {book.author.name}
+                  {bookItem.author.name}
                 </Link>
               </TableCell>
-              <TableCell>{book.created_at}</TableCell>
-              {book.created_user == null ? (
+              <TableCell>{bookItem.created_at}</TableCell>
+              {bookItem.created_user == null ? (
                 <TableCell>null</TableCell>
               ) : (
-                <TableCell>{book.created_user.name}</TableCell>
+                <TableCell>{bookItem.created_user.name}</TableCell>
               )}
-              {book.components && (
+              {bookItem.components && (
                 <TableCell>
                   {/* 任意の既存のコンポーネントをpagesコンポーネントから受け取って表示 */}
-                  {book.components(book).map((Component) => (
-                    <div key={book.id}>{Component}</div>
+                  {bookItem.components(bookItem).map((Component, index) => (
+                    <div key={index}>{Component}</div>
                   ))}
                 </TableCell>
               )}

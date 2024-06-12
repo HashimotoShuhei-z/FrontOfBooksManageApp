@@ -1,39 +1,12 @@
 'use client'
-import { useEffect, useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import Link from 'next/link'
 import { buttonVariants } from '@/components/parts/button'
 import { getToken } from '@/lib/getCookieCSR'
 import AuthorSearch from '../partsGroups/serchForm/serchAuthor'
 import AuthorTable from '@/components/partsGroups/tables/author-table'
-import { UpdateAuthor } from '../partsGroups/update/updateAuthor'
-import { DeleteAuthor } from '../partsGroups/delete/deleteAuthor'
 
-async function fetchAuthors(name: string, page: number) {
-  //引数なしでクエリのないオブジェクトを作成
-  const params = new URLSearchParams()
-  //キーと値のペアをオブジェクトに追加
-  params.append('name', name)
-  params.append('page', page.toString())
-  // クッキーからトークンを取得
-  const token = getToken()
-
-  // params.toString() で ?title=タイトル&page=ページ番号 という文字列を作成
-  const response = await fetch(`http://localhost/api/admin/authors?${params.toString()}`, {
-    headers: {
-      'Content-Type': 'application/json',
-      Authorization: token ? `Bearer ${token.split('=')[1]}` : '' // クッキー文字列のトークンの値部分のみ抽出
-    },
-    cache: 'no-store'
-  })
-
-  if (!response.ok) {
-    throw new Error('Failed to fetch authors')
-  }
-
-  const authorsData: AuthorsData = await response.json()
-  return authorsData
-}
-
+//TODO：クエリーparamが変わった時にAPIのエンドポイントが変わってくれない
 const AdminAuthorPage = ({
   searchParams //page.tsxのpage関数にはserchParamsかparamsというpropsを入れることが可能
 }: {
@@ -43,47 +16,88 @@ const AdminAuthorPage = ({
     page?: string
   }
 }) => {
-  const name = searchParams?.name || ''
-  const page = Number(searchParams?.page) || 1
-
-  const [authors, setAuthors] = useState<Author[]>([])
-  const [meta, setMeta] = useState<Meta>()
-  const [error, setError] = useState(null)
+  const [authors, setAuthors] = useState<AuthorsData | undefined>(undefined)
+  const [loading, setLoading] = useState(true)
+  const [error, setError] = useState<string | null>(null)
 
   useEffect(() => {
-    setError(null)
+    const fetchData = async () => {
+      try {
+        const token = getToken()
+        if (!token) {
+          throw new Error('Token not found')
+        }
+        const name = searchParams?.name || ''
+        const page = Number(searchParams?.page) || 1
+        const params = new URLSearchParams()
+        params.append('name', name)
+        params.append('page', page.toString())
 
-    fetchAuthors(name, page)
-      .then((data) => {
-        setAuthors(
-          data.authors.map((author) => {
-            return {
-              ...author,
-              components: (author: Author) => [
-                <UpdateAuthor id={author.id} name={author.name} />,
-                <DeleteAuthor id={author.id} />
-                //既存のコンポーネントをPropsとともにtableコンポーネントへ送る
-              ]
-            }
-          })
-        )
-        setMeta(data.meta)
-      })
-      .catch((err) => {
-        setError(err.message)
-      })
-  }, [name, page])
+        const res = await fetch(`http://localhost/api/admin/authors?${params.toString()}`, {
+          headers: {
+            'Content-Type': 'application/json',
+            Authorization: `Bearer ${token}`
+          },
+          cache: 'no-store'
+        })
 
-  if (error) {
-    return <p>Error: {error}</p>
+        if (!res.ok) {
+          throw new Error('Failed to fetch authors data')
+        }
+
+        const data: AuthorsData = await res.json()
+        setAuthors(data)
+      } catch (error) {
+        console.error('Error fetching authors data:', error)
+        //TODO:初回レンダリング時になぜかトークンを取得できないのでページをリロード→取得できる
+        setTimeout(() => {
+          window.location.reload()
+        })
+      } finally {
+        setLoading(false)
+      }
+    }
+    fetchData()
+  }, [searchParams])
+
+  if (loading) {
+    return <h1>Loading...</h1>
   }
+  if (!authors) {
+    return <h1>No authors data found</h1>
+  }
+
+  //   fetchAuthors(name, page)
+  //     .then((data) => {
+  //       setAuthors(
+  //         data.author.map((author) => {
+  //           return {
+  //             ...author,
+  //             components: (author: Author) => [
+  //               <UpdateAuthor id={author.id} name={author.name} />,
+  //               <DeleteAuthor id={author.id} />
+  //               //既存のコンポーネントをPropsとともにtableコンポーネントへ送る
+  //             ]
+  //           }
+  //         })
+  //       )
+  //       setMeta(data.meta)
+  //     })
+  //     .catch((err) => {
+  //       setError(err.message)
+  //     })
+  // }, [name, page])
+
+  // if (error) {
+  //   return <p>Error: {error}</p>
+  // }
 
   return (
     <main className="w-screen h-screen">
       <AuthorSearch placeholder="Serch authors..." />
       <div className="w-screen px-40 pt-5">
         <h2 className="mx-3 my-1 text-xl font-semibold">著者一覧</h2>
-        <AuthorTable authors={authors} meta={meta} />
+        <AuthorTable author={authors.author} meta={authors.meta} />
       </div>
       <Link href="./home" className={buttonVariants({ variant: 'outline', size: 'top', className: 'my-8' })}>
         ホームに戻る

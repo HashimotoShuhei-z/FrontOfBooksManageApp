@@ -13,8 +13,8 @@ export function middleware(req: NextRequest) {
     }
   } else {
     // トークンが存在しない場合、特定のパスへのアクセスを制限
-    //loginページも含むと無限にリダイレクトが繰り返されるため/admin/loginと/user/loginを処理実行対象外に
-    if (!pathname.endsWith('/login')) {
+    //ログインページと登録ページも含むと無限にリダイレクトが繰り返されるため、/loginと/registerを処理実行対象外に
+    if (!pathname.endsWith('/login') && !pathname.endsWith('/register')) {
       const loginUrl = new URL('./login', req.url)
       return NextResponse.redirect(loginUrl)
     }
