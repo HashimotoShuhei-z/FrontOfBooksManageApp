@@ -2,9 +2,9 @@
 import { Button } from '@/components/parts/button'
 import { Input } from '@/components/parts/input'
 import { Sheet, SheetClose, SheetContent, SheetHeader, SheetTitle, SheetTrigger } from '@/components/partsGroups/sheet'
-import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '../partsGroups/form'
+import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '../form'
 import { useForm } from 'react-hook-form'
-import { useToast } from '../ui/use-toast'
+import { useToast } from '../use-toast'
 import { useEffect, useState } from 'react'
 import { getToken } from '@/lib/getCookieCSR'
 

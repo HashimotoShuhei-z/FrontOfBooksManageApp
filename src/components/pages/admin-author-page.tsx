@@ -5,6 +5,8 @@ import { buttonVariants } from '@/components/parts/button'
 import { getToken } from '@/lib/getCookieCSR'
 import AuthorSearch from '../partsGroups/serchForm/serchAuthor'
 import AuthorTable from '@/components/partsGroups/tables/author-table'
+import { UpdateAuthor } from '../partsGroups/update/updateAuthor'
+import { DeleteAuthor } from '../partsGroups/delete/deleteAuthor'
 
 //TODO：クエリーparamが変わった時にAPIのエンドポイントが変わってくれない
 const AdminAuthorPage = ({
@@ -46,10 +48,19 @@ const AdminAuthorPage = ({
         }
 
         const data: AuthorsData = await res.json()
-        setAuthors(data)
+        const transformedData: AuthorsData = {
+          ...data,
+          author: data.author?.map((author) => ({
+            ...author,
+            components: () => [
+              <UpdateAuthor key={`update-${author.id}`} id={author.id} name={author.name} />,
+              <DeleteAuthor key={`delete-${author.id}`} id={author.id} />
+            ]
+          }))
+        }
+        setAuthors(transformedData)
       } catch (error) {
         console.error('Error fetching authors data:', error)
-        //TODO:初回レンダリング時になぜかトークンを取得できないのでページをリロード→取得できる
         setTimeout(() => {
           window.location.reload()
         })
@@ -58,7 +69,7 @@ const AdminAuthorPage = ({
       }
     }
     fetchData()
-  }, [searchParams])
+  }, [searchParams?.name, searchParams?.page])
 
   if (loading) {
     return <h1>Loading...</h1>
